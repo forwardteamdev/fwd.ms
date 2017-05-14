@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  nginx:
+    build: ./containers/nginx
+    container_name: nginx.fwd
+    depends_on:
+      - php
+    ports:
+      - "3000:80"
+    volumes:
+      - ../:/data/app
+    networks:
+      - private
+  php:
+    image: hope/php:7.1
+    container_name: php.fwd
+    ports:
+      - "9000:9000"
+    volumes:
+      - ../:/data/app
+    networks:
+      - private
+  db:
+    image: hope/mongodb:3.2
+    container_name: db.fwd
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./volumes/db:/data/db
+    networks:
+      - private
+
+networks:
+  private:
+    driver: bridge
