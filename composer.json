@@ -21,14 +21,22 @@
     },
     "require": {
         "php": ">=5.5.9",
+        "alcaeus/mongo-php-adapter": "^1.1",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
+        "doctrine/mongodb-odm": "^1.1",
+        "doctrine/mongodb-odm-bundle": "^3.3",
         "doctrine/orm": "^2.5",
+        "friendsofsymfony/oauth-server-bundle": "^1.5",
+        "friendsofsymfony/rest-bundle": "^2.2",
+        "friendsofsymfony/user-bundle": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
+        "nelmio/api-doc-bundle": "^2.13",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "symfony/monolog-bundle": "^3.0.2",
         "symfony/polyfill-apcu": "^1.0",
+        "symfony/serializer": "^3.2",
         "symfony/swiftmailer-bundle": "^2.3.10",
         "symfony/symfony": "3.2.*",
         "twig/twig": "^1.0||^2.0"
@@ -53,7 +61,12 @@
             "@symfony-scripts"
         ],
         "docker-up": "docker-compose -p fwd -f dev/docker-compose.yml up -d --build",
-        "docker-stop": "docker-compose -p fwd -f dev/docker-compose.yml stop"
+        "docker-stop": "docker-compose -p fwd -f dev/docker-compose.yml stop",
+        "docker-pull": "docker-compose -p fwd -f dev/docker-compose.yml pull",
+        "dev": [
+            "@docker-pull",
+            "@docker-up"
+        ]
     },
     "config": {
         "sort-packages": true

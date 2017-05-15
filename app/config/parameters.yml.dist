@@ -17,3 +17,7 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    # Misc
+    mongodb_server: "mongodb://db.fwd:27017"
+    mongodb_default_db: ~
