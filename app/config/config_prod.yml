@@ -7,6 +7,16 @@ imports:
 #        result_cache_driver: apc
 #        query_cache_driver: apc
 
+doctrine_mongodb:
+    connections:
+        default:
+            server: "%mongodb_server%"
+            options: {}
+    default_database: "%mongodb_default_db%"
+    document_managers:
+        default:
+            auto_mapping: true
+
 monolog:
     handlers:
         main:

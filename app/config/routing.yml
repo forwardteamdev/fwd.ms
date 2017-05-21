@@ -1,6 +1,6 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+app_homepage:
+    resource: '@AppBundle/Controller/DefaultController.php'
+    type: rest
 
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"

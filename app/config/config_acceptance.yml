@@ -1,0 +1,20 @@
+imports:
+  - { resource: config_test.yml }
+
+framework:
+  profiler:
+    only_exceptions: false
+    collect: true
+
+web_profiler:
+  toolbar: true
+
+csa_guzzle:
+  logger: true
+  clients:
+    local_test_api:
+      config:
+        base_uri: "http://local.docker:3000/"
+
+parameters:
+  mongodb_default_db: "fwd_ms_test_acceptance"
