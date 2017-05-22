@@ -1,4 +1,10 @@
 security:
+    role_hierarchy:
+        ROLE_JUNIOR: ROLE_USER,
+        ROLE_SENIOR: ROLE_JUNIOR
+        ROLE_MENTOR: ROLE_SENIOR
+        ROLE_TEAMLEAD: ROLE_MENTOR
+        ROLE_SUPER_ADMIN: ROLE_TEAMLEAD
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
 
