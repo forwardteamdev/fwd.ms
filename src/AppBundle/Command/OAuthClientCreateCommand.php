@@ -32,17 +32,12 @@ class OAuthClientCreateCommand extends ContainerAwareCommand
     {
         $redirectUri = $input->getArgument('redirectUri');
 
-        $clientManager = $this->getContainer()->get('fos_oauth_server.client_manager.default');
-        /** @var Client $client */
-        $client = $clientManager->createClient();
-        $client->setRedirectUris([$redirectUri]);
-        $client->setAllowedGrantTypes(array('token', 'authorization_code', 'password'));
-
-        $clientManager->updateClient($client);
+        $clientService = $this->getContainer()->get('app.oauth.client');
+        $client = $clientService->create([$redirectUri]);
 
         $output->writeln('<info>oAuth Client is created</info>');
         $output->writeln('Public ID: <info>' . $client->getPublicId() . '</info>');
-        $output->writeln('Random ID: <info>' . $client->getRandomId() . '</info>');
+        $output->writeln('Random ID: <info>' . $client->getSecret() . '</info>');
         $output->writeln('Redirect URIs: <info>' . implode(', ', $client->getRedirectUris()) . '</info>');
     }
 }

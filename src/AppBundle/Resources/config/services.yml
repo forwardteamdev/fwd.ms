@@ -1,0 +1,5 @@
+services:
+
+  app.oauth.client:
+    class: AppBundle\Service\OAuthClientService
+    arguments: ['@fos_oauth_server.client_manager.default']
