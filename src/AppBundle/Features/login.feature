@@ -6,9 +6,9 @@ Feature: Handle user login via the RESTful API
 
   Background:
     Given there are Users with the following details:
-      | id | username | email          | password |
-      | 1  | peter    | peter@test.com | testpass |
-      | 2  | john     | john@test.org  | johnpass |
+      | id | username | email          | password | firstName | lastName | gender | photo     |
+      | 1  | peter    | peter@test.com | testpass | Peter     | Johns    | m      | peter.jpg |
+      | 2  | john     | john@test.org  | johnpass | John      | Dow      | m      | john.jpg  |
     And there are oAuth Client with the following details:
       | redirect_uri             |
       | http://local.docker:3000 |
