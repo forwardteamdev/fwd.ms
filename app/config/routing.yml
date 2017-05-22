@@ -1,5 +1,5 @@
 app_homepage:
-    resource: '@AppBundle/Controller/DefaultController.php'
+    resource: '@AppBundle/Controller/UserController.php'
     type: rest
 
 NelmioApiDocBundle:

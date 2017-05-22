@@ -7,10 +7,11 @@ use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class DefaultController extends FOSRestController
+class UserController extends FOSRestController
 {
     /**
      * @throws \LogicException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function getUserAction()
     {
