@@ -5,6 +5,13 @@
 
     <document name="AppBundle\Document\User" collection="user" customId="true">
         <field fieldName="id" id="true" strategy="AUTO" />
+        <field fieldName="firstName" name="first_name"  type="string" />
+        <field fieldName="lastName" name="last_name"  type="string" />
+        <field fieldName="gender" name="gender"  type="string" />
+        <field fieldName="team" name="team"  type="string" />
+        <field fieldName="progress" name="progress"  type="string" />
+        <field fieldName="vk_id" name="vk_id"  type="string" />
+        <field fieldName="fb_id" name="fb_id"  type="string" />
     </document>
 
 </doctrine-mongo-mapping>
