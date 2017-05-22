@@ -1,0 +1,16 @@
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                    http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+
+    <document name="AppBundle\Document\Progress" collection="progress" customId="true">
+        <field fieldName="id" id="true" strategy="AUTO" />
+        <reference-many target-document="AppBundle\Document\Sprint" field="sprints" />
+        <reference-many target-document="AppBundle\Document\Challenge" field="challenges" />
+        <reference-many target-document="AppBundle\Document\Pin" field="pins" />
+        <reference-many target-document="AppBundle\Document\Question" field="questions" />
+        <reference-many target-document="AppBundle\Document\News" field="news" />
+        <reference-many target-document="AppBundle\Document\Vote" field="votes" />
+    </document>
+
+</doctrine-mongo-mapping>

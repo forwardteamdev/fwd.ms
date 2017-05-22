@@ -16,14 +16,27 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
  */
 class User extends BaseUser
 {
-    /**
-     * @MongoDB\Id(strategy="auto")
-     */
-    protected $id;
+
+    protected $firstName;
+
+    protected $lastName;
+
+    protected $gender;
+
+    protected $team;
+
+    protected $progress;
+
+    protected $photo;
+
+    protected $vk_id;
+
+    protected $fb_id;
 
     public function __construct()
     {
         parent::__construct();
         // your own logic
     }
+
 }
