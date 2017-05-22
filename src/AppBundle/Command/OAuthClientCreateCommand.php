@@ -19,7 +19,7 @@ class OAuthClientCreateCommand extends ContainerAwareCommand
         $this
             ->setName('app:oauth_client:create')
             ->setDescription('Creates oAuth Client')
-            ->addArgument('redirectUri', InputArgument::REQUIRED, 'Redirect URI')
+            ->addArgument('redirectUri', InputArgument::REQUIRED, 'Redirect URI, use comma to separate several URIs')
         ;
     }
 
@@ -27,13 +27,15 @@ class OAuthClientCreateCommand extends ContainerAwareCommand
      * {@inheritdoc}
      * @throws \LogicException
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $redirectUri = $input->getArgument('redirectUri');
+        $uri = explode(',', $redirectUri);
 
         $clientService = $this->getContainer()->get('app.oauth.client');
-        $client = $clientService->create([$redirectUri]);
+        $client = $clientService->create($uri);
 
         $output->writeln('<info>oAuth Client is created</info>');
         $output->writeln('Public ID: <info>' . $client->getPublicId() . '</info>');
