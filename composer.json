@@ -73,6 +73,12 @@
         "dev": [
             "@docker-pull",
             "@docker-up"
+        ],
+        "test-behat": "vendor/bin/behat",
+        "test-phpunit": "vendor/bin/phpunit",
+        "tests": [
+            "@test-behat",
+            "@test-phpunit"
         ]
     },
     "config": {
