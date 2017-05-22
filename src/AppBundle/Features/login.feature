@@ -28,3 +28,11 @@ Feature: Handle user login via the RESTful API
       """
     Then the response code should be 200
     And the response should contain "access_token"
+
+  Scenario: User is successfully logged in
+    When I am successfully logged in with username: "peter", and password: "testpass"
+    Then the response code should be 200
+    And the response should contain "access_token"
+    Then I send a "GET" request to "/app_acceptance.php/user"
+    And the response code should be 200
+    And the response should contain "email"

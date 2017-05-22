@@ -87,8 +87,31 @@ class RestApiContext implements Context
     public function iAmAuthenticatingAs($username, $password)
     {
         $this->removeHeader('Authorization');
-        $this->authorization = base64_encode($username . ':' . $password);
-        $this->addHeader('Authorization', 'Basic ' . $this->authorization);
+
+        try {
+            $this->iSendARequest('POST', '/app_acceptance.php/oauth/v2/token', [
+                'json' => [
+                    'grant_type' => 'password',
+                    'client_id' => $this->getOAuthClientData('getPublicId'),
+                    'client_secret' => $this->getOAuthClientData('getSecret'),
+                    'username' => $username,
+                    'password' => $password,
+                ]
+            ]);
+
+            $this->theResponseCodeShouldBe(200);
+
+            $responseBody = json_decode($this->response->getBody(), true);
+            $this->addHeader('Authorization', 'Bearer ' . $responseBody['access_token']);
+
+        } catch (RequestException $e) {
+            echo Psr7\str($e->getRequest());
+
+            if ($e->hasResponse()) {
+                echo Psr7\str($e->getResponse());
+            }
+
+        }
     }
 
     /**
@@ -102,7 +125,7 @@ class RestApiContext implements Context
     public function iAmSuccessfullyLoggedInWithUsernameAndPassword($username, $password)
     {
         try {
-            $this->iSendARequest('POST', 'login', [
+            $this->iSendARequest('POST', '/app_acceptance.php/oauth/v2/token', [
                 'json' => [
                     'grant_type' => 'password',
                     'client_id' => $this->getOAuthClientData('getPublicId'),
