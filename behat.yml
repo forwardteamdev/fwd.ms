@@ -6,13 +6,15 @@ default:
       bundle: AppBundle
       contexts:
         - FeatureContext:
-            doctrine: "@doctrine"
+            container: "@service_container"
         - AppBundle\Features\Context\RestApiContext:
             client: "@csa_guzzle.client.local_test_api"
+            session: "@session"
         - AppBundle\Features\Context\UserSetupContext:
             userManager: "@fos_user.user_manager"
-            em: "@doctrine.odm.mongodb.document_manager"
-
+        - AppBundle\Features\Context\OAuthClientSetupContext:
+            clientService: "@app.oauth.client"
+            session: "@session"
   extensions:
     Behat\Symfony2Extension:
       kernel:

@@ -15,6 +15,3 @@ csa_guzzle:
     local_test_api:
       config:
         base_uri: "http://local.docker:3000/"
-
-parameters:
-  mongodb_default_db: "fwd_ms_test_acceptance"

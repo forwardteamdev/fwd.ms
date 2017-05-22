@@ -61,6 +61,16 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
+doctrine_mongodb:
+    connections:
+        default:
+            server: "%mongodb_server%"
+            options: {}
+    default_database: "%mongodb_default_db%_%kernel.environment%"
+    document_managers:
+        default:
+            auto_mapping: true
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: '%mailer_transport%'
@@ -68,16 +78,6 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
-
-doctrine_mongodb:
-    connections:
-        default:
-            server: "%mongodb_server%"
-            options: {}
-    default_database: "%mongodb_default_db%"
-    document_managers:
-        default:
-            auto_mapping: true
 
 nelmio_api_doc: ~
 

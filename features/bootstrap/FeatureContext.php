@@ -7,16 +7,15 @@
  */
 
 use \Behat\Behat\Context\Context;
-use Doctrine\ODM\MongoDB\Tools\Console\Command\Schema\CreateCommand;
-use Doctrine\ODM\MongoDB\Tools\Console\Command\Schema\DropCommand;
+use \Symfony\Component\Process\Process;
+use \Doctrine\Common\Persistence\ManagerRegistry;
 
 class FeatureContext implements Context
 {
-    private $doctrine;
-    private $manager;
-    private $createCommand;
-    private $dropCommand;
-    private $classes;
+    /**
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    private $container;
 
     /**
      * Initializes context.
@@ -24,21 +23,34 @@ class FeatureContext implements Context
      * Every scenario gets its own context instance.
      * You can also pass arbitrary arguments to the
      * context constructor through behat.yml.
-     * @param \Doctrine\Common\Persistence\ManagerRegistry $doctrine
      */
-    public function __construct(\Doctrine\Common\Persistence\ManagerRegistry $doctrine)
+    public function __construct(\Symfony\Component\DependencyInjection\ContainerInterface $container)
     {
-        $this->doctrine = $doctrine;
-        $this->manager = $doctrine->getManager();
-        $this->classes = $this->manager->getMetadataFactory()->getAllMetadata();
+        $this->container = $container;
     }
 
     /**
      * @BeforeScenario
+     * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
      */
     public function createSchema()
     {
-        $dropCommand = new dropCommand();
-        $createCommand = new CreateCommand();
+        $rootDir = $this->container->getParameter('kernel.root_dir');
+        $env = '--env=' . $this->container->get('kernel')->getEnvironment();
+        $consoleCommand = $rootDir . '/../bin/console';
+        $dropCommand = $consoleCommand . ' doctrine:mongodb:schema:drop ' . $env;
+        $createCommand = $consoleCommand . ' doctrine:mongodb:schema:create ' . $env;
+
+        $this->runProcess($dropCommand);
+        $this->runProcess($createCommand);
+    }
+
+    private function runProcess($command)
+    {
+        $processDrop = new Process($command);
+        $processDrop->run();
+        if (!$processDrop->isSuccessful()) {
+            throw new \Symfony\Component\Process\Exception\ProcessFailedException($processDrop);
+        }
     }
 }
