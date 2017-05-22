@@ -3,7 +3,7 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                     http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <document name="AppBundle\Document\RefreshToken" db="fwt" collection="oauthRefreshToken" customId="true">
+    <document name="AppBundle\Document\RefreshToken" collection="oauthRefreshToken" customId="true">
         <field fieldName="id" id="true" strategy="AUTO" />
         <reference-one target-document="AppBundle\Document\Client" field="client" />
         <reference-one target-document="AppBundle\Document\User" field="user" />
