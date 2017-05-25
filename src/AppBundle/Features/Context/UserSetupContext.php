@@ -49,6 +49,7 @@ class UserSetupContext implements Context, SnippetAcceptingContext
             $user->setUsername($val['username']);
             $user->setEmail($val['email']);
             $user->setPlainPassword($val['password']);
+            $user->addRole($val['role']);
             $user->setConfirmationToken($confirmationToken);
             $user->setFirstName($val['firstName']);
             $user->setLastName($val['lastName']);
