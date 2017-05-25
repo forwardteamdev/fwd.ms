@@ -12,6 +12,7 @@
         <field fieldName="progress" name="progress"  type="string" />
         <field fieldName="vk_id" name="vk_id"  type="string" />
         <field fieldName="fb_id" name="fb_id"  type="string" />
+        <reference-one target-document="AppBundle\Document\UserInvitation" field="invitation" />
     </document>
 
 </doctrine-mongo-mapping>

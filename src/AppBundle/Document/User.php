@@ -56,6 +56,11 @@ class User extends BaseUser
      */
     protected $fb_id;
 
+    /**
+     * @MongoDB\ReferenceOne(targetDocument="UserInvitation")
+     */
+    protected $invitation;
+
     public function __construct()
     {
         parent::__construct();
@@ -188,5 +193,21 @@ class User extends BaseUser
     public function setVkId($vk_id)
     {
         $this->vk_id = $vk_id;
+    }
+
+    /**
+     * @return UserInvitation
+     */
+    public function getInvitation()
+    {
+        return $this->invitation;
+    }
+
+    /**
+     * @param UserInvitation $invitation
+     */
+    public function setInvitation(UserInvitation $invitation)
+    {
+        $this->invitation = $invitation;
     }
 }
