@@ -1,11 +1,17 @@
-app_homepage:
+app_user:
     resource: '@AppBundle/Controller/UserController.php'
     type: rest
     prefix: /api
 
+app_user_registration:
+    resource: '@AppBundle/Controller/UserRegistrationController.php'
+    type: rest
+    prefix: /
+
+
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /api/doc
+    prefix:   /doc/api
 
 fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
