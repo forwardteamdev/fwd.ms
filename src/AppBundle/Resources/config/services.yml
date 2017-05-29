@@ -1,5 +1,21 @@
 services:
 
+  app.form.registration:
+        class: AppBundle\Form\Type\UserRegistrationType
+        tags:
+            - { name: "form.type", alias: "app_user_registration" }
+
+  app.form.data_transformer.invitation:
+        class: AppBundle\Form\DataTransformer\InvitationToCodeTransformer
+        arguments: ['@doctrine.odm.mongodb.document_manager']
+        public: false
+
+  app.form.invitation:
+        class: AppBundle\Form\Type\UserInvitationFormType
+        arguments: ['@app.form.data_transformer.invitation']
+        tags:
+            - { name: "form.type", alias: "app_invitation_type" }
+
   app.oauth.client:
     class: AppBundle\Service\OAuthClientService
     arguments: ['@fos_oauth_server.client_manager.default']
