@@ -8,6 +8,7 @@
 namespace AppBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @MongoDB\Document
@@ -23,11 +24,13 @@ class UserInvitation
 
     /**
      * @MongoDB\Field(type="string")
+     * @Assert\Email()
      */
     protected $email;
 
     /**
      * @MongoDB\Field(type="int")
+     * @Assert\NotNull()
      */
     protected $team;
 
@@ -67,10 +70,13 @@ class UserInvitation
 
     /**
      * @param mixed $email
+     * @return $this
      */
     public function setEmail($email)
     {
         $this->email = $email;
+
+        return $this;
     }
 
     /**
@@ -83,10 +89,13 @@ class UserInvitation
 
     /**
      * @param mixed $team
+     * @return $this
      */
     public function setTeam($team)
     {
         $this->team = $team;
+
+        return $this;
     }
 
     /**
@@ -95,14 +104,6 @@ class UserInvitation
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt(\DateTime $createdAt)
-    {
-        $this->createdAt = $createdAt;
     }
 
     /**
@@ -115,9 +116,12 @@ class UserInvitation
 
     /**
      * @param boolean $sent
+     * @return $this
      */
     public function setSent($sent)
     {
         $this->sent = $sent;
+
+        return $this;
     }
 }
