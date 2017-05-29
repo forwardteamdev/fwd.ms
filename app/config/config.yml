@@ -87,6 +87,9 @@ fos_rest:
         include_format: false
 
 fos_user:
+    registration:
+        form:
+            type: AppBundle\Form\Type\UserRegistrationType
     db_driver: mongodb
     firewall_name: api
     user_class: AppBundle\Document\User
