@@ -10,8 +10,11 @@ default:
         - AppBundle\Features\Context\RestApiContext:
             client: "@csa_guzzle.client.local_test_api"
             session: "@session"
+            objectManager: "@doctrine.odm.mongodb.document_manager"
         - AppBundle\Features\Context\UserSetupContext:
             userManager: "@fos_user.user_manager"
+        - AppBundle\Features\Context\UserInvitationSetupContext:
+            objectManager: "@doctrine.odm.mongodb.document_manager"
         - AppBundle\Features\Context\OAuthClientSetupContext:
             clientService: "@app.oauth.client"
             session: "@session"

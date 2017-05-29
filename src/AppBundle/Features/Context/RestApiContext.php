@@ -8,9 +8,11 @@
 namespace AppBundle\Features\Context;
 
 use AppBundle\Document\Client;
+use AppBundle\Document\UserInvitation;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use Doctrine\Common\Persistence\ObjectManager;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Post\PostFile;
@@ -29,6 +31,7 @@ class RestApiContext implements Context
 {
     const OAUTH_CLIENT_ID_PLACEHOLDER = '__OAUTH_CLIENT_ID__';
     const OAUTH_CLIENT_SECRET_PLACEHOLDER = '__OAUTH_CLIENT_SECRET__';
+    const USER_INVITATION_CODE = '__USER_INVITATION_CODE__';
 
     /**
      * @var ClientInterface
@@ -66,14 +69,26 @@ class RestApiContext implements Context
     private $session;
 
     /**
+     * @var ObjectManager
+     */
+    private $objectManager;
+
+    /**
+     * @var array
+     */
+    private $data;
+
+    /**
      * RestApiContext constructor.
      * @param ClientInterface $client
      * @param Session $session
+     * @param ObjectManager $objectManager
      */
-    public function __construct(ClientInterface $client, Session $session)
+    public function __construct(ClientInterface $client, Session $session, ObjectManager $objectManager)
     {
         $this->client = $client;
         $this->session = $session;
+        $this->objectManager = $objectManager;
     }
 
     /**
@@ -148,6 +163,18 @@ class RestApiContext implements Context
             }
 
         }
+    }
+
+    /**
+     * Get User Invitation Code by Email
+     * @param $email
+     *
+     * @When /^I have user invitation code for email: "([^"]*)"$/
+     */
+    public function IHaveUserInvitationCode($email)
+    {
+        $invitation = $this->getUserInvitationCode($email);
+        $this->data['invitation'] =  ($invitation instanceof UserInvitation) ? $invitation->getCode() : '';
     }
 
     /**
@@ -240,8 +267,17 @@ class RestApiContext implements Context
      */
     public function iSendARequestWithBody($method, $url, PyStringNode $string)
     {
-        $placeholders = [self::OAUTH_CLIENT_ID_PLACEHOLDER, self::OAUTH_CLIENT_SECRET_PLACEHOLDER];
-        $oauthClientValues = [$this->getOAuthClientData('getPublicId'), $this->getOAuthClientData('getSecret')];
+        $placeholders = [
+            self::OAUTH_CLIENT_ID_PLACEHOLDER,
+            self::OAUTH_CLIENT_SECRET_PLACEHOLDER,
+            self::USER_INVITATION_CODE
+        ];
+
+        $oauthClientValues = [
+            $this->getOAuthClientData('getPublicId'),
+            $this->getOAuthClientData('getSecret'),
+            $this->data['invitation']
+        ];
 
         $string = str_replace($placeholders, $oauthClientValues, $string);
 
@@ -582,5 +618,13 @@ class RestApiContext implements Context
         }
 
         return $client->$property();
+    }
+
+    private function getUserInvitationCode($email)
+    {
+        return $this
+            ->objectManager
+            ->getRepository(UserInvitation::class)
+            ->findOneBy(['email' => $email]);
     }
 }
