@@ -5,6 +5,7 @@
 
     <document name="AppBundle\Document\Team" collection="team" customId="true">
         <field fieldName="id" id="true" strategy="AUTO" />
+        <field fieldName="title" name="title" type="string" />
     </document>
 
 </doctrine-mongo-mapping>
