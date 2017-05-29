@@ -437,6 +437,7 @@ class RestApiContext implements Context
      */
     public function printResponse()
     {
+
         $response = $this->response;
 
         echo sprintf(
